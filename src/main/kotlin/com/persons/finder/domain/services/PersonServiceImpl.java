@@ -5,6 +5,8 @@ import com.persons.finder.data.model.Person;
 import com.persons.finder.data.persistence.PersonRepository;
 import com.persons.finder.data.transformer.PersonTransformer;
 import com.persons.finder.domain.exception.PersonNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Service
 public class PersonServiceImpl implements PersonService {
+
+    private static final Logger LOGGER = LogManager.getLogger(PersonServiceImpl.class);
 
     private final PersonRepository personRepository;
 
@@ -22,6 +26,8 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public PersonDto createPerson(final String name) {
+        LOGGER.info("Creating person...");
+
         final Person person = Person.builder()
                 .withName(name)
                 .build();
@@ -38,6 +44,7 @@ public class PersonServiceImpl implements PersonService {
         if (person != null) {
             return person;
         } else {
+            LOGGER.warn("Person could not be found with id: [{}]", id);
             throw new PersonNotFoundException();
         }
     }
@@ -45,11 +52,6 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void save(final Person person) {
         this.personRepository.persist(person);
-    }
-
-    @Override
-    public void merge(final Person person) {
-        this.personRepository.merge(person);
     }
 
     @Override

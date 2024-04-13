@@ -9,6 +9,8 @@ import com.persons.finder.data.transformer.LocationTransformer;
 import com.persons.finder.data.transformer.PersonTransformer;
 import com.persons.finder.domain.exception.PersonNotFoundException;
 import com.persons.finder.domain.utility.DistanceUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class LocationServiceImpl implements LocationService {
+
+    private static final Logger LOGGER = LogManager.getLogger(LocationServiceImpl.class);
 
     private final LocationRepository locationRepository;
 
@@ -38,9 +42,11 @@ public class LocationServiceImpl implements LocationService {
         Location location = person.getLocation();
 
         if (location != null) {
+            LOGGER.info("Updating location...");
             person.getLocation().setLatitude(locationDto.getLatitude());
             person.getLocation().setLongitude(locationDto.getLongitude());
         } else {
+            LOGGER.info("Creating location...");
             location = LocationTransformer.buildLocation(locationDto, person);
             person.setLocation(location);
             this.locationRepository.persist(location);
@@ -52,6 +58,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     @Transactional
     public void removeLocation(final Location location) {
+        LOGGER.info("Removing location...");
         this.locationRepository.delete(location);
     }
 

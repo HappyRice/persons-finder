@@ -13,7 +13,5 @@ public interface PersonService {
 
     void save(final Person person);
 
-    void merge(final Person person);
-
     List<Person> getEveryoneExceptGivenPerson(final long id);
 }

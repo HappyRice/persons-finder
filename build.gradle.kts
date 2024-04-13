@@ -21,11 +21,18 @@ configure<SourceSetContainer> {
 	}
 }
 
+configurations {
+	all {
+		exclude("org.springframework.boot", "spring-boot-starter-logging")
+	}
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-log4j2")
 	implementation("com.h2database:h2:2.1.212")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
