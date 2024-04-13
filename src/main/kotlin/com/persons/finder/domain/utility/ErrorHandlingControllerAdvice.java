@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,6 +42,12 @@ public class ErrorHandlingControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody public ErrorResponse onHttpMessageNotReadableException() {
 		return ErrorResponse.builder().withSuccess(false).withMessage("Payload must not be null").build();
+	}
+
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody public ErrorResponse onMissingServletRequestParameterException() {
+		return ErrorResponse.builder().withSuccess(false).withMessage("Missing request parameters").build();
 	}
 
 	@ExceptionHandler(JsonProcessingException.class)
