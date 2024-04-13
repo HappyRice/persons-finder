@@ -24,4 +24,10 @@ Steps:
 
 For any questions, please reach out on: leo@getsquareone.app
 
+Notes:
+- We are using a precision of 6 decimal places for the lat and long values which should be accurate up to ~11cm enough to identify a person
+- Accuracy is based on the Haversine formulae
 
+Improvements:
+- Dockerise the service
+- Addition of a UpdateHistory table to track location history

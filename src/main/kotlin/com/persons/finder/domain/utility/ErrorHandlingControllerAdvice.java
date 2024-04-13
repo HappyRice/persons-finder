@@ -61,4 +61,10 @@ public class ErrorHandlingControllerAdvice {
 	@ResponseBody public ErrorResponse onHttpMediaTypeException(final HttpMediaTypeException e) {
 		return ErrorResponse.builder().withSuccess(false).withMessage(e.getMessage()).build();
 	}
+
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseBody public ErrorResponse onAllOtherException() {
+		return ErrorResponse.builder().withSuccess(false).withMessage("Internal server error").build();
+	}
 }

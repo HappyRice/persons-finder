@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.7.0"
-	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
+	id("org.springframework.boot") version "2.7.0"
+	id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
+	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
 
 group = "com.persons.finder"
@@ -15,9 +16,19 @@ repositories {
 	mavenCentral()
 }
 
+openApi {
+	apiDocsUrl.set("http://localhost:8080/v2/api-docs")
+	outputDir.set(file("$projectDir"))
+	outputFileName.set("swagger.yaml")
+	waitTimeInSeconds.set(10)
+}
+
 configure<SourceSetContainer> {
 	named("main") {
 		java.srcDir("src/main/kotlin")
+	}
+	named("test") {
+		java.srcDir("src/test/kotlin")
 	}
 }
 
@@ -35,6 +46,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-log4j2")
 	implementation("com.h2database:h2:2.1.212")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("io.springfox:springfox-swagger2:2.9.2")
+	implementation("io.springfox:springfox-swagger-ui:2.9.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

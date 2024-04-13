@@ -1,0 +1,323 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Persons Finder API",
+    "version": "1.0.0",
+    "title": "Persons Finder",
+    "contact": {}
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Person",
+      "description": "Person Controller"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/persons": {
+      "post": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "Creates a person",
+        "operationId": "createPersonUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "request",
+            "description": "request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreatePersonRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person created successfully.",
+            "schema": {
+              "$ref": "#/definitions/PersonDto"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "The request was invalid.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "An internal server error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/persons/{personId}": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "Fetch a person",
+        "operationId": "getPersonUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "personId",
+            "in": "path",
+            "description": "personId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person fetched successfully.",
+            "schema": {
+              "$ref": "#/definitions/PersonDto"
+            }
+          },
+          "400": {
+            "description": "The request was invalid.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Person was not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "An internal server error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/persons/{personId}/location": {
+      "put": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "Adds or updates the location for a given person",
+        "operationId": "addOrUpdateLocationUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "locationDto",
+            "description": "locationDto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LocationDto"
+            }
+          },
+          {
+            "name": "personId",
+            "in": "path",
+            "description": "personId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location added/updated successfully.",
+            "schema": {
+              "$ref": "#/definitions/PersonDto"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "The request was invalid.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Person was not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "An internal server error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/persons/{personId}/vicinity": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "Fetch list of other people within radius of given person",
+        "operationId": "getPeopleWithinRadiusUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "personId",
+            "in": "path",
+            "description": "personId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "radiusInKm",
+            "in": "query",
+            "description": "radiusInKm",
+            "required": true,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of other people fetched successfully.",
+            "schema": {
+              "$ref": "#/definitions/PersonDto"
+            }
+          },
+          "400": {
+            "description": "The request was invalid.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Person was not found.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "An internal server error occurred.",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "CreatePersonRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "CreatePersonRequest"
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "title": "ErrorResponse"
+    },
+    "LocationDto": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        }
+      },
+      "title": "LocationDto"
+    },
+    "PersonDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "location": {
+          "$ref": "#/definitions/LocationDto"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "PersonDto"
+    }
+  }
+}
