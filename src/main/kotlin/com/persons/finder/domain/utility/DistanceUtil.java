@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class DistanceUtil {
 
-    private static final int EARTH_RADIUS =6371;
+    private static final int EARTH_RADIUS = 6371;
 
     // Based on the Haversine Formula
     public static BigDecimal calculateDistance(final BigDecimal startLat, final BigDecimal startLong, final BigDecimal endLat,
