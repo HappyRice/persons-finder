@@ -1,6 +1,5 @@
 package com.persons.finder.domain.utility;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.persons.finder.data.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -38,28 +37,22 @@ public class ErrorHandlingControllerAdvice {
 		return ErrorResponse.builder().withSuccess(false).withMessage(stringBuilder.toString()).build();
 	}
 
-	@ExceptionHandler(HttpMessageNotReadableException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody public ErrorResponse onHttpMessageNotReadableException() {
-		return ErrorResponse.builder().withSuccess(false).withMessage("Payload must not be null").build();
-	}
-
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody public ErrorResponse onMissingServletRequestParameterException() {
 		return ErrorResponse.builder().withSuccess(false).withMessage("Missing request parameters").build();
 	}
 
-	@ExceptionHandler(JsonProcessingException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody public ErrorResponse onJsonProcessingException() {
-		return ErrorResponse.builder().withSuccess(false).withMessage("Invalid JSON").build();
-	}
-
 	@ExceptionHandler(HttpMediaTypeException.class)
 	@ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
 	@ResponseBody public ErrorResponse onHttpMediaTypeException(final HttpMediaTypeException e) {
 		return ErrorResponse.builder().withSuccess(false).withMessage(e.getMessage()).build();
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody public ErrorResponse onHttpMessageNotReadableException(final Exception e) {
+		return ErrorResponse.builder().withSuccess(false).withMessage("Invalid payload").build();
 	}
 
 	@ExceptionHandler(Exception.class)

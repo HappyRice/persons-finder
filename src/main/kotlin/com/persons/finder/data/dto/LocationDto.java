@@ -16,15 +16,15 @@ import java.math.BigDecimal;
 public class LocationDto {
 
     @NotNull(message = "Latitude must not be null")
-    @DecimalMax(value = "90", message = "Latitude is invalid")
-    @DecimalMin(value = "-90", message = "Latitude is invalid")
-    @Digits(integer = 2, fraction = 6, message = "Latitude is invalid")
+    @DecimalMax(value = "90", message = "Latitude should not exceed 90")
+    @DecimalMin(value = "-90", message = "Latitude should not be less than -90")
+    @Digits(integer = 2, fraction = 6, message = "Latitude should not exceed 6 decimal places")
     private final BigDecimal latitude;
 
     @NotNull(message = "Longitude must not be null")
-    @DecimalMax(value = "180", message = "Longitude is invalid")
-    @DecimalMin(value = "-180", message = "Longitude is invalid")
-    @Digits(integer = 3, fraction = 6, message = "Longitude is invalid")
+    @DecimalMax(value = "180", message = "Longitude should not exceed 180")
+    @DecimalMin(value = "-180", message = "Longitude should not be less than -180")
+    @Digits(integer = 3, fraction = 6, message = "Longitude should not exceed 6 decimal places")
     private final BigDecimal longitude;
 
     public LocationDto(final Builder builder) {

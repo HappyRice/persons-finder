@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class CreatePersonRequest {
 
     @NotNull(message = "Name must not be null")
-    @Size(max = 50, message = "Name is too long")
+    @Size(max = 50, message = "Name must not exceed 50 characters")
     private final String name;
 
     public CreatePersonRequest(final Builder builder) {
