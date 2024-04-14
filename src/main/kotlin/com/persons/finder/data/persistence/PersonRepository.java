@@ -21,4 +21,8 @@ public class PersonRepository extends BaseRepository {
         return (List<Person>) this.list(query);
     }
 
+    public void savePerson(final Person person) {
+        this.persist(person);
+    }
+
 }

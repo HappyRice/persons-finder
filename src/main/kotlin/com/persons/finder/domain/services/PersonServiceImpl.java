@@ -51,7 +51,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void save(final Person person) {
-        this.personRepository.persist(person);
+        this.personRepository.savePerson(person);
     }
 
     @Override

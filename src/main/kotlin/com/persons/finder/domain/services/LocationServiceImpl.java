@@ -49,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
             LOGGER.info("Creating location...");
             location = LocationTransformer.buildLocation(locationDto, person);
             person.setLocation(location);
-            this.locationRepository.persist(location);
+            this.locationRepository.saveLocation(location);
         }
 
         return PersonTransformer.buildPersonDto(person);
@@ -59,7 +59,7 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public void removeLocation(final Location location) {
         LOGGER.info("Removing location...");
-        this.locationRepository.delete(location);
+        this.locationRepository.removeLocation(location);
     }
 
     @Override
@@ -68,6 +68,7 @@ public class LocationServiceImpl implements LocationService {
 
         final List<Person> persons = this.personService.getEveryoneExceptGivenPerson(personId);
 
+        // Returns everyone in the given vicinity sorted by closest first
         return persons.stream()
                 .filter(p -> p.getLocation() != null)
                 .map(p -> Pair.of(p, DistanceUtil.calculateDistance(person.getLocation().getLatitude(), person.getLocation().getLongitude(),
