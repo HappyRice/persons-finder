@@ -19,7 +19,7 @@ repositories {
 openApi {
 	apiDocsUrl.set("http://localhost:8080/v2/api-docs")
 	outputDir.set(file("$projectDir"))
-	outputFileName.set("swagger.yaml")
+	outputFileName.set("swagger.json")
 	waitTimeInSeconds.set(10)
 }
 

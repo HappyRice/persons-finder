@@ -39,12 +39,16 @@ To run:
 java -jar build/libs/PersonsFinder-0.0.1-SNAPSHOT.jar
 ```
 
+To generate swagger spec:
+```sh
+gradle generateOpenApiDocs
+```
+
 To manually test endpoints, open the swagger UI: http://localhost:8080/swagger-ui.html
 
 Notes:
 - We are using a precision of 6 decimal places for the lat and long values which should be accurate up to ~11cm enough to identify a person
 - Accuracy is based on the Haversine formulae
-- swagger.json is generated as part of the build
 - Using Java 8
 
 Improvements:
