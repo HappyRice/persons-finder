@@ -49,6 +49,7 @@ Notes:
 
 Improvements:
 - Dockerise the service
+- Set up authentication
 - Addition of a UpdateHistory table to track location history
 - Haven't actually used Gradle before but with Maven, I would split the project into 4 modules, common, model, persistence and service.
 - Set up physical database with Flyway
