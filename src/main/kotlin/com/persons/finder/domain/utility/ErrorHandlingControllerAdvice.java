@@ -51,7 +51,7 @@ public class ErrorHandlingControllerAdvice {
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody public ErrorResponse onHttpMessageNotReadableException(final Exception e) {
+	@ResponseBody public ErrorResponse onHttpMessageNotReadableException() {
 		return ErrorResponse.builder().withSuccess(false).withMessage("Invalid payload").build();
 	}
 

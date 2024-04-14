@@ -24,10 +24,31 @@ Steps:
 
 For any questions, please reach out on: leo@getsquareone.app
 
+To run unit & integration tests:
+```sh
+gradle test
+```
+
+To build:
+```sh
+gradle build assemble
+```
+
+To run:
+```sh
+java -jar build/libs/PersonsFinder-0.0.1-SNAPSHOT.jar
+```
+
+To manually test endpoints, open the swagger UI: http://localhost:8080/swagger-ui.html
+
 Notes:
 - We are using a precision of 6 decimal places for the lat and long values which should be accurate up to ~11cm enough to identify a person
 - Accuracy is based on the Haversine formulae
+- swagger.json is generated as part of the build
+- Using Java 8
 
 Improvements:
 - Dockerise the service
 - Addition of a UpdateHistory table to track location history
+- Haven't actually used Gradle before but with Maven, I would split the project into 4 modules, common, model, persistence and service.
+- Set up physical database with Flyway
