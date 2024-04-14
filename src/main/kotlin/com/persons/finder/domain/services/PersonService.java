@@ -13,5 +13,10 @@ public interface PersonService {
 
     void save(final Person person);
 
-    List<Person> getEveryoneExceptGivenPerson(final long id);
+    /**
+     * Fetches everyone except the given person
+     * @param personId - the reference person
+     * @return a list of people
+     */
+    List<Person> getEveryoneExceptGivenPerson(final long personId);
 }

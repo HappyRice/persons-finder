@@ -55,8 +55,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> getEveryoneExceptGivenPerson(final long id) {
-        return this.personRepository.getEveryoneExceptGivenPerson(id);
+    public List<Person> getEveryoneExceptGivenPerson(final long personId) {
+        return this.personRepository.getEveryoneExceptGivenPerson(personId);
     }
 
 }
