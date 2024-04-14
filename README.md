@@ -50,6 +50,7 @@ Notes:
 - We are using a precision of 6 decimal places for the lat and long values which should be accurate up to ~11cm enough to identify a person
 - Accuracy is based on the Haversine formulae
 - Using Java 8
+- For challenging the efficiency of the API, the find around API will slow down for large datasets so best to put the calculation in a stored function in the database and retrieve the people around directly from the database using a named query instead of programmatically 
 
 Improvements:
 - Dockerise the service
