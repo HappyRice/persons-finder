@@ -14,9 +14,9 @@ public interface PersonService {
     void save(final Person person);
 
     /**
-     * Fetches everyone except the given person
+     * Fetches everyone with a location except the given person
      * @param personId - the reference person
      * @return a list of people
      */
-    List<Person> getEveryoneExceptGivenPerson(final long personId);
+    List<Person> getEveryoneWithALocationExceptGivenPerson(final long personId);
 }

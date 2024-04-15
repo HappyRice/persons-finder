@@ -14,8 +14,8 @@ public class PersonRepository extends BaseRepository {
     }
 
     @SuppressWarnings(value = "unchecked")
-    public List<Person> getEveryoneExceptGivenPerson(final long id) {
-        final Query<?> query = this.getNamedQuery("getEveryoneExceptGivenPerson");
+    public List<Person> getEveryoneWithALocationExceptGivenPerson(final long id) {
+        final Query<?> query = this.getNamedQuery("getEveryoneWithALocationExceptGivenPerson");
         query.setParameter("id", id);
 
         return (List<Person>) this.list(query);

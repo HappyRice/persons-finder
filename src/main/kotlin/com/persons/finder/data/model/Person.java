@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Person")
-@NamedQuery(name="getEveryoneExceptGivenPerson", query="SELECT person FROM Person as person WHERE id != :id AND deletedDate IS NULL")
+@NamedQuery(name="getEveryoneWithALocationExceptGivenPerson", query="SELECT person FROM Person as person " +
+        "JOIN person.location WHERE person.id != :id AND person.deletedDate IS NULL AND person.location.deletedDate IS NULL")
 public class Person extends BaseModel {
 
     @Column(nullable = false)

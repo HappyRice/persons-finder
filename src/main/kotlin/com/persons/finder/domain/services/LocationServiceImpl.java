@@ -66,11 +66,10 @@ public class LocationServiceImpl implements LocationService {
     public List<PersonDto> findAround(final long personId, final double radiusInKm) throws PersonNotFoundException {
         final Person person = this.personService.getById(personId);
 
-        final List<Person> persons = this.personService.getEveryoneExceptGivenPerson(personId);
+        final List<Person> persons = this.personService.getEveryoneWithALocationExceptGivenPerson(personId);
 
         // Returns everyone in the given vicinity sorted by closest first
         return persons.stream()
-                .filter(p -> p.getLocation() != null)
                 .map(p -> Pair.of(p, DistanceUtil.calculateDistance(person.getLocation().getLatitude(), person.getLocation().getLongitude(),
                 p.getLocation().getLatitude(), p.getLocation().getLongitude())))
                 .filter(p -> p.getSecond().compareTo(BigDecimal.valueOf(radiusInKm)) < 1)

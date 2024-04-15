@@ -146,6 +146,15 @@ public class PersonControllerTest {
 		// Expected
 		final String expected = "[]";
 
+		// Given
+		// Create Jane with no location
+		final HttpEntity<CreatePersonRequest> createPersonPayload = new HttpEntity<>(
+				CreatePersonRequest.builder()
+						.withName("Jane")
+						.build()
+		);
+		this.restTemplate.exchange(PERSONS_PATH, HttpMethod.POST, createPersonPayload, String.class);
+
 		// When
 		final ResponseEntity<String> response = this.restTemplate.exchange(PERSONS_PATH + "/1/vicinity?radiusInKm=500",
 				HttpMethod.GET, null, String.class);
@@ -158,7 +167,7 @@ public class PersonControllerTest {
 
 	@Test
 	@Order(6)
-	public void getPeopleWithinRadiusWithSomeoneTooFarReturnsEmptyList() throws JSONException {
+	public void getPeopleWithinRadiusWithSomeoneTooFarAndSomeoneWithNoLocationReturnsEmptyList() throws JSONException {
 		// Expected
 		final String expected = "[]";
 
@@ -177,7 +186,7 @@ public class PersonControllerTest {
 						.withLongitude(BigDecimal.valueOf(180))
 						.build()
 		);
-		this.restTemplate.exchange(PERSONS_PATH + "/2/location", HttpMethod.PUT, addLocationPayload, String.class);
+		this.restTemplate.exchange(PERSONS_PATH + "/3/location", HttpMethod.PUT, addLocationPayload, String.class);
 
 		// When
 		final ResponseEntity<String> response = this.restTemplate.exchange(PERSONS_PATH + "/1/vicinity?radiusInKm=500",
@@ -195,7 +204,7 @@ public class PersonControllerTest {
 		// Expected
 		final String expected = "[\n" +
 				"    {\n" +
-				"        \"id\": 3,\n" +
+				"        \"id\": 4,\n" +
 				"        \"name\": \"John\",\n" +
 				"        \"location\": {\n" +
 				"            \"latitude\": 85.000000,\n" +
@@ -203,7 +212,7 @@ public class PersonControllerTest {
 				"        }\n" +
 				"    },\n" +
 				"    {\n" +
-				"        \"id\": 4,\n" +
+				"        \"id\": 5,\n" +
 				"        \"name\": \"Jim\",\n" +
 				"        \"location\": {\n" +
 				"            \"latitude\": 86.000000,\n" +
@@ -211,7 +220,7 @@ public class PersonControllerTest {
 				"        }\n" +
 				"    },\n" +
 				"    {\n" +
-				"        \"id\": 2,\n" +
+				"        \"id\": 3,\n" +
 				"        \"name\": \"James\",\n" +
 				"        \"location\": {\n" +
 				"            \"latitude\": 89.000000,\n" +
@@ -235,7 +244,7 @@ public class PersonControllerTest {
 						.withLongitude(BigDecimal.valueOf(180))
 						.build()
 		);
-		this.restTemplate.exchange(PERSONS_PATH + "/3/location", HttpMethod.PUT, addLocationPayload, String.class);
+		this.restTemplate.exchange(PERSONS_PATH + "/4/location", HttpMethod.PUT, addLocationPayload, String.class);
 
 		// Create Jim
 		createPersonPayload = new HttpEntity<>(
@@ -251,7 +260,7 @@ public class PersonControllerTest {
 						.withLongitude(BigDecimal.valueOf(180))
 						.build()
 		);
-		this.restTemplate.exchange(PERSONS_PATH + "/4/location", HttpMethod.PUT, addLocationPayload, String.class);
+		this.restTemplate.exchange(PERSONS_PATH + "/5/location", HttpMethod.PUT, addLocationPayload, String.class);
 
 		// When
 		final ResponseEntity<String> response = this.restTemplate.exchange(PERSONS_PATH + "/1/vicinity?radiusInKm=500000000",
