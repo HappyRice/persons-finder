@@ -49,8 +49,8 @@ public class ErrorHandlingControllerAdvice {
 
 	@ExceptionHandler(HttpMediaTypeException.class)
 	@ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-	@ResponseBody public ErrorResponse onHttpMediaTypeException(final HttpMediaTypeException e) {
-		return ErrorResponse.builder().withSuccess(false).withMessage(e.getMessage()).build();
+	@ResponseBody public ErrorResponse onHttpMediaTypeException() {
+		return ErrorResponse.builder().withSuccess(false).withMessage("Unsupported media type").build();
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
