@@ -1,6 +1,8 @@
 package com.persons.finder.domain.utility;
 
 import com.persons.finder.data.dto.ErrorResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ErrorHandlingControllerAdvice {
+
+	private static final Logger LOGGER = LogManager.getLogger(ErrorHandlingControllerAdvice.class);
 
 	@ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -57,7 +61,9 @@ public class ErrorHandlingControllerAdvice {
 
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ResponseBody public ErrorResponse onAllOtherException() {
+	@ResponseBody public ErrorResponse onAllOtherException(final Exception e) {
+		LOGGER.error(e.getMessage(), e);
+
 		return ErrorResponse.builder().withSuccess(false).withMessage("Internal server error").build();
 	}
 }

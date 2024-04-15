@@ -50,7 +50,16 @@ Notes:
 - We are using a precision of 6 decimal places for the lat and long values which should be accurate up to ~11cm enough to identify a person
 - Accuracy is based on the Haversine formulae
 - Using Java 8
-- For challenging the efficiency of the API, the find around API will slow down for large datasets so best to put the calculation directly in a named query to retrieve the people around directly using SQL and use order by to sort it instead of programmatically 
+- For challenging the efficiency of the API, the find around API will slow down for large datasets so best to put the calculation directly in a named query to retrieve the people around directly using SQL and use order by to sort it instead of programmatically. Will look something like the below:
+```
+@NamedQuery(name="getPersonsWithinRadiusInKm", query="SELECT location.person, (6371 * acos( cos( radians(:startLat) ) * cos( radians(location.latitude) ) " +
+        "* cos( radians(location.longitude) - radians(:startLong) ) + sin( radians(:startLat) ) * sin(radians(location.latitude)) ) ) AS distance " +
+        "FROM Location as location JOIN location.person " +
+        "WHERE location.person.id != :id " +
+        "AND distance <= :radius " +
+        "ORDER BY distance")
+```
+
 
 Improvements:
 - Dockerise the service
