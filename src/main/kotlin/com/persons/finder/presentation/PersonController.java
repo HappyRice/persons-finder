@@ -81,9 +81,10 @@ public class PersonController {
             value = "Fetch list of other people within radius of given person",
             httpMethod = "GET",
             produces = MediaType.APPLICATION_JSON_VALUE,
+            responseContainer = "List",
             response = PersonDto.class)
     @ApiResponses(value = {
-            @ApiResponse(code = SC_OK, message = "List of other people fetched successfully.", response = PersonDto.class),
+            @ApiResponse(code = SC_OK, message = "List of other people fetched successfully.", response = PersonDto.class, responseContainer = "List"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "The request was invalid.", response = ErrorResponse.class),
             @ApiResponse(code = SC_NOT_FOUND, message = "Person was not found.", response = ErrorResponse.class),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
