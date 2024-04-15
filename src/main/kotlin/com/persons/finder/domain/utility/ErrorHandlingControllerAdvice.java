@@ -23,7 +23,7 @@ public class ErrorHandlingControllerAdvice {
 
 	@ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody ErrorResponse onMethodArgumentNotValidException(final Exception e) {
+	@ResponseBody public ErrorResponse onMethodArgumentNotValidException(final Exception e) {
 		final BindingResult bindingResult;
 
 		if (e instanceof MethodArgumentNotValidException) {
@@ -43,8 +43,8 @@ public class ErrorHandlingControllerAdvice {
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody public ErrorResponse onMissingServletRequestParameterException() {
-		return ErrorResponse.builder().withSuccess(false).withMessage("Missing request parameters").build();
+	@ResponseBody public ErrorResponse onMissingServletRequestParameterException(final MissingServletRequestParameterException e) {
+		return ErrorResponse.builder().withSuccess(false).withMessage("Missing request parameter: " + e.getParameterName()).build();
 	}
 
 	@ExceptionHandler(HttpMediaTypeException.class)
