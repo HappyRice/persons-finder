@@ -2,6 +2,7 @@ package com.persons.finder.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Configuration
 public class ApiDocConfig {
 
-    private static final Set<String> APPLICATION_JSON = new HashSet<>(Collections.singletonList("application/json"));
+    private static final Set<String> APPLICATION_JSON = new HashSet<>(Collections.singletonList(MediaType.APPLICATION_JSON_VALUE));
 
     private ApiInfo getApiInfo() {
         return new ApiInfo("Persons Finder",
