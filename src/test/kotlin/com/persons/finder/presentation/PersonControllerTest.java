@@ -277,7 +277,7 @@ public class PersonControllerTest {
 		// Expected
 		final String expected = "{\n" +
 				"    \"success\": false,\n" +
-				"    \"message\": \"Person not found\"\n" +
+				"    \"message\": \"Person was not found\"\n" +
 				"}";
 
 		// When
@@ -295,7 +295,7 @@ public class PersonControllerTest {
 		// Expected
 		final String expected = "{\n" +
 				"    \"success\": false,\n" +
-				"    \"message\": \"Person not found\"\n" +
+				"    \"message\": \"Person was not found\"\n" +
 				"}";
 
 		// When

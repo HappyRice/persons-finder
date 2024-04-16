@@ -15,8 +15,8 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 import static javax.servlet.http.HttpServletResponse.*;
 
@@ -47,17 +47,9 @@ public class PersonController {
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
     })
     @PutMapping(value = "/{personId}/location", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Object addOrUpdateLocation(@PathVariable final long personId, @Valid @RequestBody final LocationDto locationDto,
-                                                    final HttpServletResponse response) {
-        try {
-            return this.locationService.addOrUpdateLocation(personId, locationDto);
-        } catch (final PersonNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return ErrorResponse.builder()
-                    .withSuccess(false)
-                    .withMessage(e.getMessage())
-                    .build();
-        }
+    public PersonDto addOrUpdateLocation(@PathVariable final long personId, @Valid @RequestBody final LocationDto locationDto) throws PersonNotFoundException {
+
+        return this.locationService.addOrUpdateLocation(personId, locationDto);
     }
 
     @ApiOperation(
@@ -72,7 +64,7 @@ public class PersonController {
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Object createPerson(@Valid @RequestBody final CreatePersonRequest request) {
+    public PersonDto createPerson(@Valid @RequestBody final CreatePersonRequest request) {
 
         return this.personService.createPerson(request.getName());
     }
@@ -90,17 +82,9 @@ public class PersonController {
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
     })
     @GetMapping(value = "/{personId}/vicinity", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Object getPeopleWithinRadius(@PathVariable final long personId, @RequestParam final double radiusInKm,
-                                                      final HttpServletResponse response) {
-        try {
-            return this.locationService.findAround(personId, radiusInKm);
-        } catch (final PersonNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return ErrorResponse.builder()
-                    .withSuccess(false)
-                    .withMessage(e.getMessage())
-                    .build();
-        }
+    public List<PersonDto> getPeopleWithinRadius(@PathVariable final long personId, @RequestParam final double radiusInKm) throws PersonNotFoundException {
+
+        return this.locationService.findAround(personId, radiusInKm);
     }
 
     @ApiOperation(
@@ -115,15 +99,8 @@ public class PersonController {
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
     })
     @GetMapping(value = "/{personId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Object getPerson(@PathVariable final long personId, final HttpServletResponse response) {
-        try {
-            return PersonTransformer.buildPersonDto(this.personService.getById(personId));
-        } catch (final PersonNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return ErrorResponse.builder()
-                    .withSuccess(false)
-                    .withMessage(e.getMessage())
-                    .build();
-        }
+    public PersonDto getPerson(@PathVariable final long personId) throws PersonNotFoundException {
+
+        return PersonTransformer.buildPersonDto(this.personService.getById(personId));
     }
 }

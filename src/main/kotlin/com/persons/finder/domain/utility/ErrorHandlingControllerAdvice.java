@@ -1,6 +1,7 @@
 package com.persons.finder.domain.utility;
 
 import com.persons.finder.data.dto.ErrorResponse;
+import com.persons.finder.domain.exception.PersonNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,12 @@ public class ErrorHandlingControllerAdvice {
 		}
 
 		return ErrorResponse.builder().withSuccess(false).withMessage(stringBuilder.toString()).build();
+	}
+
+	@ExceptionHandler(PersonNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody public ErrorResponse onPersonNotFoundExceptionException() {
+		return ErrorResponse.builder().withSuccess(false).withMessage("Person was not found").build();
 	}
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
