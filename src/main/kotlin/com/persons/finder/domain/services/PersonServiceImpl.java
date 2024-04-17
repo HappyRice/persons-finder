@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -33,21 +32,21 @@ public class PersonServiceImpl implements PersonService {
                 .withName(name)
                 .build();
 
-        this.save(person);
+        this.savePerson(person);
 
         return PersonTransformer.buildPersonDto(person);
     }
 
     @Override
-    public Person getById(final long id) throws PersonNotFoundException {
-        return Optional.ofNullable(this.personRepository.getPersonById(id)).orElseThrow(() -> {
+    public Person getPersonById(final long id) throws PersonNotFoundException {
+        return this.personRepository.getPersonById(id).orElseThrow(() -> {
             LOGGER.warn("Person could not be found with id: [{}]", id);
             return new PersonNotFoundException();
         });
     }
 
     @Override
-    public void save(final Person person) {
+    public void savePerson(final Person person) {
         this.personRepository.savePerson(person);
     }
 

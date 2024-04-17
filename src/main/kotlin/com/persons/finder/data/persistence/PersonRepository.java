@@ -5,12 +5,13 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PersonRepository extends BaseRepository {
 
-    public Person getPersonById(final long id) {
-        return this.getById(Person.class, id);
+    public Optional<Person> getPersonById(final long id) {
+        return Optional.ofNullable(this.getById(Person.class, id));
     }
 
     @SuppressWarnings(value = "unchecked")

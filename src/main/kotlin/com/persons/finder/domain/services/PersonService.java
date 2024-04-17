@@ -7,11 +7,11 @@ import com.persons.finder.domain.exception.PersonNotFoundException;
 import java.util.List;
 
 public interface PersonService {
-    Person getById(final long id) throws PersonNotFoundException;
+    Person getPersonById(final long id) throws PersonNotFoundException;
 
     PersonDto createPerson(final String name);
 
-    void save(final Person person);
+    void savePerson(final Person person);
 
     /**
      * Fetches everyone with a location except the given person

@@ -84,7 +84,7 @@ public class PersonController {
     @GetMapping(value = "/{personId}/vicinity", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PersonDto> getPeopleWithinRadius(@PathVariable final long personId, @RequestParam final double radiusInKm) throws PersonNotFoundException {
 
-        return this.locationService.findAround(personId, radiusInKm);
+        return this.locationService.getPeopleWithinRadius(personId, radiusInKm);
     }
 
     @ApiOperation(
@@ -101,6 +101,6 @@ public class PersonController {
     @GetMapping(value = "/{personId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonDto getPerson(@PathVariable final long personId) throws PersonNotFoundException {
 
-        return PersonTransformer.buildPersonDto(this.personService.getById(personId));
+        return PersonTransformer.buildPersonDto(this.personService.getPersonById(personId));
     }
 }

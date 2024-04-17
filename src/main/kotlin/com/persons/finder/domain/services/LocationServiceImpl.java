@@ -38,7 +38,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     @Transactional
     public PersonDto addOrUpdateLocation(final long personId, final LocationDto locationDto) throws PersonNotFoundException {
-        final Person person = this.personService.getById(personId);
+        final Person person = this.personService.getPersonById(personId);
 
         final Optional<Location> locationOpt = Optional.ofNullable(person.getLocation());
 
@@ -64,8 +64,8 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<PersonDto> findAround(final long personId, final double radiusInKm) throws PersonNotFoundException {
-        final Person person = this.personService.getById(personId);
+    public List<PersonDto> getPeopleWithinRadius(final long personId, final double radiusInKm) throws PersonNotFoundException {
+        final Person person = this.personService.getPersonById(personId);
 
         final List<Person> persons = this.personService.getEveryoneWithALocationExceptGivenPerson(personId);
 

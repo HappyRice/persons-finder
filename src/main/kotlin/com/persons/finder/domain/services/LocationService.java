@@ -20,5 +20,5 @@ public interface LocationService {
      * @return a list of people found otherwise empty list if no one found
      * @throws PersonNotFoundException - reference person not found with given id
      */
-    List<PersonDto> findAround(final long personId, final double radiusInKm) throws PersonNotFoundException;
+    List<PersonDto> getPeopleWithinRadius(final long personId, final double radiusInKm) throws PersonNotFoundException;
 }

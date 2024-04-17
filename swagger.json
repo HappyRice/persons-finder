@@ -237,7 +237,10 @@
           "200": {
             "description": "List of other people fetched successfully.",
             "schema": {
-              "$ref": "#/definitions/PersonDto"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PersonDto"
+              }
             }
           },
           "400": {
