@@ -40,14 +40,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person getById(final long id) throws PersonNotFoundException {
-        final Optional<Person> person = Optional.ofNullable(this.personRepository.getPersonById(id));
-
-        if (person.isPresent()) {
-            return person.get();
-        } else {
+        return Optional.ofNullable(this.personRepository.getPersonById(id)).orElseThrow(() -> {
             LOGGER.warn("Person could not be found with id: [{}]", id);
-            throw new PersonNotFoundException();
-        }
+            return new PersonNotFoundException();
+        });
     }
 
     @Override

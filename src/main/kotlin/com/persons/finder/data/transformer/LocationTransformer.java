@@ -14,16 +14,11 @@ public final class LocationTransformer {
     }
 
     public static LocationDto buildLocationDto(final Location location) {
-        final Optional<Location> locationOpt = Optional.ofNullable(location);
-
-        if (locationOpt.isPresent()) {
-            return LocationDto.builder()
-                    .withLatitude(location.getLatitude().setScale(6, RoundingMode.UNNECESSARY))
-                    .withLongitude(location.getLongitude().setScale(6, RoundingMode.UNNECESSARY))
-                    .build();
-        } else {
-            return null;
-        }
+        return Optional.ofNullable(location).map(l -> LocationDto.builder()
+                .withLatitude(location.getLatitude().setScale(6, RoundingMode.UNNECESSARY))
+                .withLongitude(location.getLongitude().setScale(6, RoundingMode.UNNECESSARY))
+                .build())
+                .orElse(null);
     }
 
     public static Location buildLocation(final LocationDto location, final Person person) {
