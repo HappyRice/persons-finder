@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -39,10 +40,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person getById(final long id) throws PersonNotFoundException {
-        final Person person = this.personRepository.getPersonById(id);
+        final Optional<Person> person = Optional.ofNullable(this.personRepository.getPersonById(id));
 
-        if (person != null) {
-            return person;
+        if (person.isPresent()) {
+            return person.get();
         } else {
             LOGGER.warn("Person could not be found with id: [{}]", id);
             throw new PersonNotFoundException();

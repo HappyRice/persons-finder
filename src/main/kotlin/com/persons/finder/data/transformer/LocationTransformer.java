@@ -5,6 +5,7 @@ import com.persons.finder.data.model.Location;
 import com.persons.finder.data.model.Person;
 
 import java.math.RoundingMode;
+import java.util.Optional;
 
 public final class LocationTransformer {
 
@@ -13,7 +14,9 @@ public final class LocationTransformer {
     }
 
     public static LocationDto buildLocationDto(final Location location) {
-        if (location != null) {
+        final Optional<Location> locationOpt = Optional.ofNullable(location);
+
+        if (locationOpt.isPresent()) {
             return LocationDto.builder()
                     .withLatitude(location.getLatitude().setScale(6, RoundingMode.UNNECESSARY))
                     .withLongitude(location.getLongitude().setScale(6, RoundingMode.UNNECESSARY))

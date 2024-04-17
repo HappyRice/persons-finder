@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,15 +40,15 @@ public class LocationServiceImpl implements LocationService {
     public PersonDto addOrUpdateLocation(final long personId, final LocationDto locationDto) throws PersonNotFoundException {
         final Person person = this.personService.getById(personId);
 
-        Location location = person.getLocation();
+        final Optional<Location> locationOpt = Optional.ofNullable(person.getLocation());
 
-        if (location != null) {
+        if (locationOpt.isPresent()) {
             LOGGER.info("Updating location...");
             person.getLocation().setLatitude(locationDto.getLatitude());
             person.getLocation().setLongitude(locationDto.getLongitude());
         } else {
             LOGGER.info("Creating location...");
-            location = LocationTransformer.buildLocation(locationDto, person);
+            final Location location = LocationTransformer.buildLocation(locationDto, person);
             person.setLocation(location);
             this.locationRepository.saveLocation(location);
         }
