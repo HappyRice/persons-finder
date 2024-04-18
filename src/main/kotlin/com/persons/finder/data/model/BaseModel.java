@@ -2,15 +2,14 @@ package com.persons.finder.data.model;
 
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.Filters;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
-@FilterDef(name = "notDeleted")
-@Filters({ @Filter(name = "notDeleted", condition = "deletedDate IS NULL") })
+@FilterDef(name = "notDeleted", defaultCondition = "deletedDate IS NULL")
+@Filter(name = "notDeleted")
 public abstract class BaseModel {
 
     @Id

@@ -1,7 +1,5 @@
 package com.persons.finder.data.model;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +12,6 @@ public class Person extends BaseModel {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
-    @Where(clause = "deletedDate IS NULL")
     private Location location;
 
     public Person() {

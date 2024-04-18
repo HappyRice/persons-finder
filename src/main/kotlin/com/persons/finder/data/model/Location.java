@@ -1,7 +1,5 @@
 package com.persons.finder.data.model;
 
-import org.hibernate.annotations.FilterJoinTable;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -17,7 +15,6 @@ public class Location extends BaseModel {
 
     @OneToOne
     @JoinColumn(name = "personId")
-    @FilterJoinTable(name = "notDeleted", condition = "deletedDate IS NULL")
     private Person person;
 
     public Location() {

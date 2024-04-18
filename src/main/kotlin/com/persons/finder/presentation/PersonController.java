@@ -35,6 +35,40 @@ public class PersonController {
     }
 
     @ApiOperation(
+            value = "Creates a person",
+            httpMethod = "POST",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            response = PersonDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = SC_OK, message = "Person created successfully.", response = PersonDto.class),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "The request was invalid.", response = ErrorResponse.class),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
+    })
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public PersonDto createPerson(@Valid @RequestBody final CreatePersonRequest request) {
+
+        return this.personService.createPerson(request.getName());
+    }
+
+    @ApiOperation(
+            value = "Fetch a person",
+            httpMethod = "GET",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            response = PersonDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = SC_OK, message = "Person fetched successfully.", response = PersonDto.class),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "The request was invalid.", response = ErrorResponse.class),
+            @ApiResponse(code = SC_NOT_FOUND, message = "Person was not found.", response = ErrorResponse.class),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
+    })
+    @GetMapping(value = "/{personId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PersonDto getPerson(@PathVariable final long personId) throws PersonNotFoundException {
+
+        return PersonTransformer.buildPersonDto(this.personService.getPersonById(personId));
+    }
+
+    @ApiOperation(
             value = "Adds or updates the location for a given person",
             httpMethod = "PUT",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -53,23 +87,6 @@ public class PersonController {
     }
 
     @ApiOperation(
-            value = "Creates a person",
-            httpMethod = "POST",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            response = PersonDto.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = SC_OK, message = "Person created successfully.", response = PersonDto.class),
-            @ApiResponse(code = SC_BAD_REQUEST, message = "The request was invalid.", response = ErrorResponse.class),
-            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
-    })
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonDto createPerson(@Valid @RequestBody final CreatePersonRequest request) {
-
-        return this.personService.createPerson(request.getName());
-    }
-
-    @ApiOperation(
             value = "Fetch list of other people within radius of given person",
             httpMethod = "GET",
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -85,22 +102,5 @@ public class PersonController {
     public List<PersonDto> getPeopleWithinRadius(@PathVariable final long personId, @RequestParam final double radiusInKm) throws PersonNotFoundException {
 
         return this.locationService.getPeopleWithinRadius(personId, radiusInKm);
-    }
-
-    @ApiOperation(
-            value = "Fetch a person",
-            httpMethod = "GET",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            response = PersonDto.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = SC_OK, message = "Person fetched successfully.", response = PersonDto.class),
-            @ApiResponse(code = SC_BAD_REQUEST, message = "The request was invalid.", response = ErrorResponse.class),
-            @ApiResponse(code = SC_NOT_FOUND, message = "Person was not found.", response = ErrorResponse.class),
-            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An internal server error occurred.", response = ErrorResponse.class)
-    })
-    @GetMapping(value = "/{personId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PersonDto getPerson(@PathVariable final long personId) throws PersonNotFoundException {
-
-        return PersonTransformer.buildPersonDto(this.personService.getPersonById(personId));
     }
 }
